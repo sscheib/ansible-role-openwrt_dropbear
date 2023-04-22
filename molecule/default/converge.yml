@@ -1,0 +1,27 @@
+---
+- name: 'Converge'
+  hosts: 'all'
+  become_method: 'su'
+  gather_facts: false
+  vars:
+    dropbear_options:
+      enable: true
+      verbose: false
+      BannerFile:
+      PasswordAuth: false
+      Port: 2222
+      RootPasswordAuth: false
+      RootLogin: true
+      GatewayPorts: false
+      keyfile: '/etc/dropbear/dropbear_ed25519_host_key'
+      SSHKeepAlive: 300
+      IdleTimeout: 0
+      mdns: false
+      MaxAuthTries: 3
+      Interface:
+    dropbear_authorized_keys:
+      - 'test_key.pub'
+    dropbear_delete_unspecified_ssh_keys: true
+    dropbear_service_name: 'dropbear'
+  roles:
+    - name: 'openwrt_dropbear'

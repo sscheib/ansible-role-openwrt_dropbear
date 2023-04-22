@@ -1,0 +1,20 @@
+---
+- name: 'Ensure dropbear listens on port 2222'
+  hosts: 'all'
+  gather_facts: true
+  tasks:
+    - name: 'Gather open ports'
+      ansible.builtin.shell:
+        cmd: >
+          netstat -tulpen | grep 2222 | awk '{ print $7 }' | sed -E 's/^[[:digit:]]+\///'
+      register: __t_output
+      changed_when: false
+      become: true
+
+    - name: 'Ensure dropbear listens on port 2222'
+      ansible.builtin.assert:
+        that:
+          - __t_line == 'dropbear'
+      loop: '{{ __t_output.stdout_lines }}'
+      loop_control:
+        loop_var: '__t_line'

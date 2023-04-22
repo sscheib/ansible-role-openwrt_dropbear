@@ -1,0 +1,12 @@
+---
+- name: 'Commit uci changes'  # noqa: command-instead-of-shell no-changed-when
+  ansible.builtin.shell:
+    cmd: 'uci commit'
+  become: true
+  notify: 'Restart dropbear'
+
+- name: 'Restart dropbear'
+  ansible.builtin.sysvinit:
+    name: '{{ _dropbear_service_name }}'
+    state: 'restarted'
+  become: true

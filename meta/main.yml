@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: 'sscheib'
+  description: 'Configure dropbear on OpenWrt devices'
+  license: 'GPL-2.0-or-later'
+  min_ansible_version: '2.12'
+  platforms:
+    - name: 'OpenWrt'
+      versions:
+        - '21.02'
+        - '22.03'
+  galaxy_tags:
+    - 'openwrt'
+    - 'dropbear'
+
+dependencies: []

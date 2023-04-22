@@ -1,0 +1,115 @@
+---
+- name: 'Gather minimal facts'
+  ansible.builtin.setup:
+    gather_subset:
+      - '!all'
+      - '!min'
+      - 'virtualization_type'
+
+- name: 'Set fact: Check if we are running in Podman'
+  ansible.builtin.set_fact:
+    __t_changed_when_podman: false
+  when: ansible_facts.virtualization_type == 'podman'
+
+- name: 'Include tasks to set/update UCI keys'
+  ansible.builtin.include_tasks:
+    file: 'uci_set_update.yml'
+  vars:
+    _uci_prefix_key: 'dropbear.@dropbear[0].'
+  loop: '{{ _dropbear_options | dict2items }}'
+  when: >
+    _uci_item.value is defined
+    and _uci_item.value != None
+    and _uci_item.value != ''
+  loop_control:
+    loop_var: '_uci_item'
+
+- name: 'Include tasks to delete unset UCI keys'
+  ansible.builtin.include_tasks:
+    file: 'uci_delete.yml'
+  loop: '{{ _dropbear_options | dict2items }}'
+  when: >
+    _uci_item.value is not defined
+    or _uci_item.value == None
+    or _uci_item.value == ''
+  loop_control:
+    loop_var: '_uci_item'
+  vars:
+    _uci_prefix_key: 'dropbear.@dropbear[0].'
+
+- name: 'Block: Handle exclusive SSH keys'
+  when: >
+    _dropbear_delete_unspecified_ssh_keys is defined
+    and _dropbear_delete_unspecified_ssh_keys
+  block:
+
+    - name: 'Set fact: authorized_keys'
+      ansible.builtin.set_fact:
+        __t_authorized_keys: "{{ __t_authorized_keys | default([]) + [lookup('ansible.builtin.file', '{{ __t_ssh_key }}')] }}"
+      loop: '{{ _dropbear_authorized_keys }}'
+      loop_control:
+        loop_var: '__t_ssh_key'
+
+    - name: 'Transfer authorized keys and ensure unspecified keys are not present'
+      ansible.posix.authorized_key:
+        user: 'root'
+        state: 'present'
+        key: "{{ __t_authorized_keys | join('\n') }}"
+        manage_dir: false
+        path: '{{ _dropbear_authorized_keys_path }}'
+        exclusive: true
+      notify: 'Restart dropbear'
+      become: true
+
+- name: 'Transfer authorized keys'
+  ansible.posix.authorized_key:
+    user: 'root'
+    state: 'present'
+    key: "{{ lookup('ansible.builtin.file', item) }}"
+    manage_dir: false
+    path: '{{ _dropbear_authorized_keys_path }}'
+    exclusive: false
+  loop: '{{ _dropbear_authorized_keys }}'
+  notify: 'Restart dropbear'
+  become: true
+  when: >
+    _dropbear_delete_unspecified_ssh_keys is undefined
+    or not _dropbear_delete_unspecified_ssh_keys
+
+- name: 'Block: Handle dropbear hotplug script deployment'
+  become: true
+  when: >
+    _dropbear_deploy_hotplug_script is defined
+    and _dropbear_deploy_hotplug_script
+  block:
+
+    - name: 'Ensure hotplug directory exists: {{ _dropbear_hotplug_directory }}'
+      ansible.builtin.file:
+        path: '{{ _dropbear_hotplug_directory }}'
+        owner: '{{ _dropbear_hotplug_directory_owner }}'
+        group: '{{ _dropbear_hotplug_directory_group }}'
+        mode: '{{ _dropbear_hotplug_directory_mode }}'
+        state: 'directory'
+
+    - name: 'Deploy {{ _dropbear_hotplug_script_dest }}'
+      ansible.builtin.template:
+        src: '{{ _dropbear_hotplug_script_src }}'
+        dest: '{{ _dropbear_hotplug_script_dest }}'
+        owner: '{{ _dropbear_hotplug_script_owner }}'
+        group: '{{ _dropbear_hotplug_script_group }}'
+        mode: '{{ _dropbear_hotplug_script_mode }}'
+
+- name: 'Ensure dropbear is enabled'
+  ansible.builtin.service:
+    name: 'dropbear'
+    enabled: true
+  become: true
+  when: ansible_facts.virtualization_type != 'podman'
+
+- name: 'Ensure dropbear is enabled (molecule)'
+  ansible.builtin.sysvinit:
+    name: 'dropbear'
+    enabled: true
+  become: true
+  changed_when: false
+  when: ansible_facts.virtualization_type == 'podman'

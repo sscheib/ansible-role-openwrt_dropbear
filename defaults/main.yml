@@ -1,0 +1,40 @@
+---
+# UCI options to apply to dropbear
+_def_dropbear_options:
+  enable: true
+  verbose: true
+  BannerFile: '/etc/issue.net'
+  PasswordAuth: false
+  Port: 605
+  RootPasswordAuth: false
+  RootLogin: true
+  GatewayPorts: false
+  keyfile:
+    - '/etc/dropbear/dropbear_ed25519_host_key'
+  SSHKeepAlive: 300
+  IdleTimeout: 0
+  mdns: false
+  MaxAuthTries: 3
+  Interface:
+
+# whether to delete unspecified SSH keys
+_def_dropbear_delete_unspecified_ssh_keys: false
+
+# dropbear service name
+_def_dropbear_service_name: 'dropbear'
+
+# path to dropbear's authorized_keys file
+_def_dropbear_authorized_keys_path: '/etc/dropbear/authorized_keys'
+
+# settings for the hotplug script
+_def_dropbear_deploy_hotplug_script: true
+_def_dropbear_hotplug_directory: '/etc/hotplug.d/iface'
+_def_dropbear_hotplug_directory_owner: 'root'
+_def_dropbear_hotplug_directory_group: 'root'
+_def_dropbear_hotplug_directory_mode: '0755'
+
+_def_dropbear_hotplug_script_src: 'etc_hotplug.d_dropbear.j2'
+_def_dropbear_hotplug_script_dest: '/etc/hotplug.d/iface/99-dropbear'
+_def_dropbear_hotplug_script_owner: 'root'
+_def_dropbear_hotplug_script_group: 'root'
+_def_dropbear_hotplug_script_mode: '0600'

@@ -1,0 +1,25 @@
+---
+- name: 'Set fact: UCI prefix'
+  ansible.builtin.set_fact:
+    _uci_prefix_key: ''
+  when: >
+    _uci_prefix_key is not defined
+    or _uci_prefix_key == None
+
+- name: 'Verify if UCI key is set: {{ _uci_item }}'
+  ansible.builtin.shell:
+    cmd: |
+      uci show {{ _uci_prefix_key ~ _uci_item.key }}
+  changed_when: false
+  register: '__tmp_key_set'
+  ignore_errors: true
+  become: true
+
+- name: 'Remove UCI key: {{ _uci_item }}'
+  ansible.builtin.shell:
+    cmd: |
+      uci delete {{ _uci_prefix_key ~ _uci_item.key }}
+  when: __tmp_key_set.rc == 0
+  changed_when: true
+  become: true
+  notify: 'Commit uci changes'
