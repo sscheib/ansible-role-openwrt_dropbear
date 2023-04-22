@@ -1,4 +1,4 @@
-Role Name
+openwrt_dropbear
 =========
 
 Configure dropbear on OpenWrt devices using UCI and deploy SSH keys for passwordless authentication with dropbear.
