@@ -13,7 +13,7 @@ Role Variables
 ```
 - dropbear_options: UCI options to apply to dropbear
   Default value:
-  _def_dropbear_options:
+  dropbear_options:
     enable: true
     verbose: true
     BannerFile: '/etc/issue.net'
