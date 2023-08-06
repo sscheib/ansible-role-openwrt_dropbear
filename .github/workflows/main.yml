@@ -28,3 +28,4 @@ jobs:
         with:
           molecule_command: 'test'
           molecule_args: '--scenario-name ${{ matrix.scenario }}'
+          molecule_working_dir: '${{ github.repository }}'
