@@ -12,11 +12,23 @@
       ansible.builtin.pause:
         seconds: 30
 
+
     - name: 'Ensure resolv.conf contains Google DNS'
       ansible.builtin.raw: >
         /bin/echo 'nameserver 8.8.8.8' > /etc/resolv.conf
       args:
         executable: '/bin/ash'
+
+    - ansible.builtin.raw:
+        >
+        env; ip a s; cat /etc/resolv.conf; ping -c 1 1.1.1.1
+      args:
+        executable: '/bin/ash'
+      changed_when: 'false'
+      ignore_errors: true
+      register: tmp
+
+    - debug: var=tmp
 
     - name: 'Ensure opkg cache is up to date'
       ansible.builtin.raw: '/bin/opkg update'
