@@ -6,7 +6,7 @@ driver:
 
 platforms:
   - name: '21.02'
-    image: 'docker.io/openwrtorg/rootfs:x86-generic-openwrt-21.02'
+    image: 'docker.io/openwrt/rootfs:x86-generic-openwrt-21.02'
     command: '/sbin/init'
     capabilities:
       - 'SYS_ADMIN'
@@ -14,7 +14,7 @@ platforms:
     privileged: true
 
   - name: '22.03'
-    image: 'docker.io/openwrtorg/rootfs:x86-generic-openwrt-22.03'
+    image: 'docker.io/openwrt/rootfs:x86-generic-openwrt-22.03'
     command: '/sbin/init'
     capabilities:
       - 'SYS_ADMIN'
@@ -22,7 +22,7 @@ platforms:
     privileged: true
 
   - name: 'snapshot'
-    image: 'docker.io/openwrtorg/rootfs:x86-generic-snapshot'
+    image: 'docker.io/openwrt/rootfs:x86-generic-snapshot'
     command: '/sbin/init'
     capabilities:
       - 'SYS_ADMIN'
