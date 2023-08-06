@@ -13,7 +13,7 @@ platforms:
     pre_build_image: true
     privileged: true
     networks:
-      - 'host'
+      - name: 'molecule'
 
   - name: '22.03'
     image: 'docker.io/openwrt/rootfs:x86-generic-openwrt-22.03'
@@ -23,7 +23,7 @@ platforms:
     pre_build_image: true
     privileged: true
     networks:
-      - 'host'
+      - name: 'molecule'
 
   - name: 'snapshot'
     image: 'docker.io/openwrt/rootfs:x86-generic-snapshot'
