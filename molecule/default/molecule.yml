@@ -2,7 +2,7 @@
 role_name_check: 1
 
 driver:
-  name: 'podman'
+  name: 'docker'
 
 platforms:
   - name: '21.02'
