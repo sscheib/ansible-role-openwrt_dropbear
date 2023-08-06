@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         scenario:
-          'default'
+          - 'default'
 
     steps:
       - name: 'Checkout'
