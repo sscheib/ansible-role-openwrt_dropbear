@@ -2,7 +2,7 @@
 role_name_check: 1
 
 driver:
-  name: 'docker'
+  name: 'podman'
 
 platforms:
   - name: '21.02'
@@ -12,6 +12,8 @@ platforms:
       - 'SYS_ADMIN'
     pre_build_image: true
     privileged: true
+    networks:
+      - 'host'
 
   - name: '22.03'
     image: 'docker.io/openwrt/rootfs:x86-generic-openwrt-22.03'
@@ -20,6 +22,8 @@ platforms:
       - 'SYS_ADMIN'
     pre_build_image: true
     privileged: true
+    networks:
+      - 'host'
 
   - name: 'snapshot'
     image: 'docker.io/openwrt/rootfs:x86-generic-snapshot'
@@ -28,6 +32,8 @@ platforms:
       - 'SYS_ADMIN'
     pre_build_image: true
     privileged: true
+    networks:
+      - name: 'molecule'
 
 provisioner:
   name: 'ansible'
@@ -50,7 +56,7 @@ verifier:
 scenario:
   test_sequence:
     - 'dependency'
-      #    - 'destroy'
+    - 'destroy'
     - 'syntax'
     - 'create'
     - 'prepare'
