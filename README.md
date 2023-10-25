@@ -1,3 +1,5 @@
+[![ansible-lint](https://github.com/sscheib/ansible-role-openwrt_dropbear/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/sscheib/ansible-role-openwrt_dropbear/actions/workflows/ansible-lint.yml) [![Publish latest release to Ansible Galaxy](https://github.com/sscheib/ansible-role-openwrt_dropbear/actions/workflows/ansible-galaxy.yml/badge.svg?branch=main)](https://github.com/sscheib/ansible-role-openwrt_dropbear/actions/workflows/ansible-galaxy.yml)
+
 openwrt_dropbear
 =========
 
