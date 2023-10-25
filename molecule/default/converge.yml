@@ -1,13 +1,13 @@
 ---
 - name: 'Converge'
   hosts: 'all'
-  become_method: 'su'
+  become_method: 'ansible.builtin.su'
   gather_facts: false
   vars:
     dropbear_options:
       enable: true
       verbose: false
-      BannerFile:
+      BannerFile: ''
       PasswordAuth: false
       Port: 2222
       RootPasswordAuth: false
@@ -18,10 +18,11 @@
       IdleTimeout: 0
       mdns: false
       MaxAuthTries: 3
-      Interface:
+      Interface: ''
     dropbear_authorized_keys:
       - 'test_key.pub'
     dropbear_delete_unspecified_ssh_keys: true
     dropbear_service_name: 'dropbear'
   roles:
-    - name: 'openwrt_dropbear'
+    - role: 'openwrt_dropbear'
+...

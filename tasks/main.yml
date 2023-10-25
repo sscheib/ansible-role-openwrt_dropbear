@@ -9,7 +9,7 @@
 - name: 'Set fact: Check if we are running in Podman'
   ansible.builtin.set_fact:
     __t_changed_when_podman: false
-  when: ansible_facts.virtualization_type == 'podman'
+  when: "ansible_facts.virtualization_type == 'podman'"
 
 - name: 'Include tasks to set/update UCI keys'
   ansible.builtin.include_tasks:
@@ -45,7 +45,12 @@
 
     - name: 'Set fact: authorized_keys'
       ansible.builtin.set_fact:
-        __t_authorized_keys: "{{ __t_authorized_keys | default([]) + [lookup('ansible.builtin.file', '{{ __t_ssh_key }}')] }}"
+        __t_authorized_keys: >-
+          {{
+            __t_authorized_keys | default([]) + [
+              lookup('ansible.builtin.file', '{{ __t_ssh_key }}')
+            ]
+          }}
       loop: '{{ _dropbear_authorized_keys }}'
       loop_control:
         loop_var: '__t_ssh_key'
@@ -104,7 +109,7 @@
     name: 'dropbear'
     enabled: true
   become: true
-  when: ansible_facts.virtualization_type != 'podman'
+  when: "ansible_facts.virtualization_type != 'podman'"
 
 - name: 'Ensure dropbear is enabled (molecule)'
   ansible.builtin.sysvinit:
@@ -112,4 +117,5 @@
     enabled: true
   become: true
   changed_when: false
-  when: ansible_facts.virtualization_type == 'podman'
+  when: "ansible_facts.virtualization_type == 'podman'"
+...

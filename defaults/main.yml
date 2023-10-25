@@ -15,7 +15,7 @@ _def_dropbear_options:
   IdleTimeout: 0
   mdns: false
   MaxAuthTries: 3
-  Interface:
+  Interface: ''
 
 # whether to delete unspecified SSH keys
 _def_dropbear_delete_unspecified_ssh_keys: false
@@ -38,3 +38,4 @@ _def_dropbear_hotplug_script_dest: '/etc/hotplug.d/iface/99-dropbear'
 _def_dropbear_hotplug_script_owner: 'root'
 _def_dropbear_hotplug_script_group: 'root'
 _def_dropbear_hotplug_script_mode: '0600'
+...

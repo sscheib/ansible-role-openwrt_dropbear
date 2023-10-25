@@ -19,7 +19,7 @@
   ansible.builtin.set_fact:
     __tmp_uci_value: "{{ 'off' if _uci_item.value == false else 'on' }}"
   register: '__tmp_is_bool'
-  when: _uci_item.value | bool | string == _uci_item.value | string
+  when: '_uci_item.value | bool | string == _uci_item.value | string'
 
 - name: 'Set fact: Check if value is a list'
   ansible.builtin.set_fact:
@@ -45,9 +45,9 @@
       set -o pipefail;
       uci show {{ _uci_prefix_key ~ _uci_item.key }} | head -n1 | awk -F '=' '{ print $2 }' | tr -d "'"
   changed_when: false
-  register: __tmp_item_value
+  register: '__tmp_item_value'
   become: true
-  when: __tmp_key_exists.rc == 0
+  when: '__tmp_key_exists.rc == 0'
 
 - name: 'Create/update UCI key: {{ _uci_item.key }} -> {{ __tmp_uci_value }}'  # noqa: name no-changed-when
   ansible.builtin.shell:
@@ -61,7 +61,9 @@
   notify: 'Commit uci changes'
   become: true
 
-- name: 'Include tasks to create/update list item {{ _uci_item.key }} UCI key with value {{ __tmp_uci_value }} (prefix: {{ _uci_prefix_key }})'  # noqa: name
+- name: >-
+    Include tasks to create/update list item {{ _uci_item.key }} UCI key with
+    value {{ __tmp_uci_value }} (prefix: {{ _uci_prefix_key }})'  # noqa: name
   ansible.builtin.include_tasks:
     file: 'uci_create_list_item.yml'
   when: >
@@ -71,3 +73,4 @@
     (__tmp_key_exists.rc != 0
     or
     __tmp_key_exists.stdout | split('=') | last | trim | replace("'", "") | split != __tmp_uci_value | list)
+...
