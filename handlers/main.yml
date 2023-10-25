@@ -10,3 +10,4 @@
     name: '{{ _dropbear_service_name }}'
     state: 'restarted'
   become: true
+...

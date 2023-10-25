@@ -8,7 +8,9 @@
   become: true
   notify: 'Commit uci changes'
 
-- name: 'Create/update {{ _uci_item.key }} UCI key with value {{ __tmp_uci_value }} (prefix: {{ _uci_prefix_key }}) (idempotancy) (list)'  # noqa: name
+- name: >-
+    Create/update {{ _uci_item.key }} UCI key with value {{ __tmp_uci_value }} (prefix:
+    {{ _uci_prefix_key }}) (idempotancy) (list)'  # noqa: name
   ansible.builtin.shell:
     cmd: |
       uci add_list {{ _uci_prefix_key ~ _uci_item.key }}={{ _uci_list_item }}
@@ -18,3 +20,4 @@
     loop_var: '_uci_list_item'
   notify: 'Commit uci changes'
   become: true
+...

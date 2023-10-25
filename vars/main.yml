@@ -6,7 +6,11 @@ _dropbear_options: '{{ dropbear_options | default(_def_dropbear_options) }}'
 _dropbear_authorized_keys: '{{ dropbear_authorized_keys | mandatory }}'
 
 # whether to delete unspecified SSH keys
-_dropbear_delete_unspecified_ssh_keys: '{{ dropbear_delete_unspecified_ssh_keys | default(_def_dropbear_delete_unspecified_ssh_keys) }}'
+_dropbear_delete_unspecified_ssh_keys: >-
+  {{
+    dropbear_delete_unspecified_ssh_keys |
+    default(_def_dropbear_delete_unspecified_ssh_keys)
+  }}
 
 # dropbear service name
 _dropbear_service_name: '{{ dropbear_service_name | default(_def_dropbear_service_name) }}'
@@ -15,14 +19,35 @@ _dropbear_service_name: '{{ dropbear_service_name | default(_def_dropbear_servic
 _dropbear_authorized_keys_path: '{{ dropbear_authorized_keys_path | default(_def_dropbear_authorized_keys_path) }}'
 
 # settings for the hotplug script
-_dropbear_deploy_hotplug_script: '{{ dropbear_deploy_hotplug_script | default(_def_dropbear_deploy_hotplug_script) }}'
-_dropbear_hotplug_directory: '{{ dropbear_hotplug_directory | default(_def_dropbear_hotplug_directory) }}'
-_dropbear_hotplug_directory_owner: '{{ dropbear_hotplug_directory_owner | default(_def_dropbear_hotplug_directory_owner) }}'
-_dropbear_hotplug_directory_group: '{{ dropbear_hotplug_directory_group | default(_def_dropbear_hotplug_directory_group) }}'
-_dropbear_hotplug_directory_mode: '{{ dropbear_hotplug_directory_mode | default(_def_dropbear_hotplug_directory_mode) }}'
+_dropbear_deploy_hotplug_script: >-
+  {{
+    dropbear_deploy_hotplug_script |
+    default(_def_dropbear_deploy_hotplug_script)
+  }}
+_dropbear_hotplug_directory: >-
+  {{
+    dropbear_hotplug_directory |
+    default(_def_dropbear_hotplug_directory)
+  }}
+_dropbear_hotplug_directory_owner: >-
+  {{
+    dropbear_hotplug_directory_owner |
+    default(_def_dropbear_hotplug_directory_owner)
+  }}
+_dropbear_hotplug_directory_group: >-
+  {{
+    dropbear_hotplug_directory_group |
+    default(_def_dropbear_hotplug_directory_group)
+  }}
+_dropbear_hotplug_directory_mode: >-
+  {{
+    dropbear_hotplug_directory_mode |
+    default(_def_dropbear_hotplug_directory_mode)
+  }}
 
 _dropbear_hotplug_script_src: '{{ dropbear_hotplug_script_src | default(_def_dropbear_hotplug_script_src) }}'
 _dropbear_hotplug_script_dest: '{{ dropbear_hotplug_script_dest | default(_def_dropbear_hotplug_script_dest) }}'
 _dropbear_hotplug_script_owner: '{{ dropbear_hotplug_script_owner | default(_def_dropbear_hotplug_script_owner) }}'
 _dropbear_hotplug_script_group: '{{ dropbear_hotplug_script_group | default(_def_dropbear_hotplug_script_group) }}'
 _dropbear_hotplug_script_mode: '{{ dropbear_hotplug_script_mode | default(_def_dropbear_hotplug_script_mode) }}'
+...

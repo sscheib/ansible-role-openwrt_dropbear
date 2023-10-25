@@ -19,7 +19,8 @@
   ansible.builtin.shell:
     cmd: |
       uci delete {{ _uci_prefix_key ~ _uci_item.key }}
-  when: __tmp_key_set.rc == 0
+  when: '__tmp_key_set.rc == 0'
   changed_when: true
   become: true
   notify: 'Commit uci changes'
+...
