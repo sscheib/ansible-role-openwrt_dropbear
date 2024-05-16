@@ -23,7 +23,7 @@ _def_dropbear_delete_unspecified_ssh_keys: false
 # dropbear service name
 _def_dropbear_service_name: 'dropbear'
 
-# path to dropbear's authorized_keys file
+# path to the authorized_keys file for dropbear
 _def_dropbear_authorized_keys_path: '/etc/dropbear/authorized_keys'
 
 # settings for the hotplug script

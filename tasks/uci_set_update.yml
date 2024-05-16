@@ -31,7 +31,7 @@
     and _uci_item.value is iterable
     and _uci_item.value | list | string == _uci_item.value | string
 
-- name: 'Set fact: UCI value (no convertion)'
+- name: 'Set fact: UCI value (no conversion)'
   ansible.builtin.set_fact:
     __tmp_uci_value: '{{ _uci_item.value }}'
   when: >
@@ -49,7 +49,7 @@
   become: true
   when: '__tmp_key_exists.rc == 0'
 
-- name: 'Create/update UCI key: {{ _uci_item.key }} -> {{ __tmp_uci_value }}'  # noqa: name no-changed-when
+- name: 'Create/update UCI key: {{ _uci_item.key }} -> {{ __tmp_uci_value }}'  # noqa: name no-changed-when  # nospell
   ansible.builtin.shell:
     cmd: |
       uci set {{ _uci_prefix_key ~ _uci_item.key }}={{ __tmp_uci_value }}
