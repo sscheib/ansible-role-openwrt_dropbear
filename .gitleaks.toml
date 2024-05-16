@@ -1,7 +1,0 @@
-[allowlist]
-  description = "Global Allowlist"
-  paths = [
-   # ignore molecule test_key
-   '''molecule/default/test_key$'''
-   '''molecule/default/test_key.pub$'''
-  ]

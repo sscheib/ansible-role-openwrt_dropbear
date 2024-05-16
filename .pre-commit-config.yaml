@@ -44,6 +44,7 @@ repos:
         stages:
           - 'pre-commit'
       - id: 'check-shebang-scripts-are-executable'
+        exclude: '^templates'
         stages:
           - 'pre-commit'
       - id: 'check-symlinks'
