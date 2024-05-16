@@ -1,6 +1,0 @@
----
-roles:
-  - name: 'openwrt_dropbear'
-    src: 'https://github.com/sscheib/ansible-role-openwrt_dropbear.git'
-    scm: 'git'
-...
