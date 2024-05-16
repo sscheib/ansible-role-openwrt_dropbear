@@ -4,7 +4,7 @@ galaxy_info:
   role_name: 'openwrt_dropbear'
   description: 'Configure dropbear on OpenWrt devices'
   license: 'GPL-2.0-or-later'
-  min_ansible_version: '2.12'
+  min_ansible_version: '2.14'
   platforms:
     - name: 'OpenWrt'
       versions:

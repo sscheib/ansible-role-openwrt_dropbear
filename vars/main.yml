@@ -15,7 +15,7 @@ _dropbear_delete_unspecified_ssh_keys: >-
 # dropbear service name
 _dropbear_service_name: '{{ dropbear_service_name | default(_def_dropbear_service_name) }}'
 
-# path to dropbear's authorized_keys file
+# path to the authorized_keys file for dropbear
 _dropbear_authorized_keys_path: '{{ dropbear_authorized_keys_path | default(_def_dropbear_authorized_keys_path) }}'
 
 # settings for the hotplug script

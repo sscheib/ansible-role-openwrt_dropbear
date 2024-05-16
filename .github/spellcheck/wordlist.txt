@@ -1,0 +1,15 @@
+ansible
+OpenWrt
+socio
+sexualized
+runtime
+macOS
+Traceback
+README
+UCI
+Podman
+idempotency
+passwordless
+dropbear
+noqa
+hotplug
