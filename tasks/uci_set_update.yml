@@ -63,7 +63,7 @@
 
 - name: >-
     Include tasks to create/update list item {{ _uci_item.key }} UCI key with
-    value {{ __tmp_uci_value }} (prefix: {{ _uci_prefix_key }})'  # noqa: name
+    value {{ __tmp_uci_value }} (prefix: {{ _uci_prefix_key }})'  # noqa: name  # nospell
   ansible.builtin.include_tasks:
     file: 'uci_create_list_item.yml'
   when: >
